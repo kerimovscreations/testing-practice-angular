@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { of } from 'rxjs';
 import { ModalData, ModalType } from '../models/modal';
 
-fdescribe('ModalService', () => {
+describe('ModalService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [ModalService, AuthService]
