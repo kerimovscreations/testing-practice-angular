@@ -4,10 +4,13 @@ import { ModalService } from './modal.service';
 import { AuthService } from './auth.service';
 import { of } from 'rxjs';
 import { ModalData, ModalType } from '../models/modal';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ModalService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [RouterTestingModule, HttpClientTestingModule],
             providers: [ModalService, AuthService]
         });
     });

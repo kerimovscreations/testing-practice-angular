@@ -7,7 +7,7 @@ import { PostBody } from '../models/post-body';
 import { HttpRequest } from '@angular/common/http';
 import { StatusResponse } from '../models/response';
 
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
