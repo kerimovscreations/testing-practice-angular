@@ -2,7 +2,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ModalService } from './modal.service';
 import { AuthService } from './auth.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ModalData, ModalType } from '../models/modal';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -38,14 +38,33 @@ describe('ModalService', () => {
         expect(methodSpy).not.toHaveBeenCalled();
     });
 
-    it('should initialize with logged in user', () => {
+    it('should initialize with logged in user successful', () => {
         const authService = TestBed.get(AuthService);
         authService.getIsUserLoggedIn$ = jasmine.createSpy().and.returnValue(of(true));
         const methodSpy = spyOn(ModalService.prototype, 'showModal');
+        const printMethodSpy = spyOn(ModalService.prototype, 'printText');
+        const completeMethodSpy = spyOn(ModalService.prototype, 'onComplete');
 
         const modalService = TestBed.get(ModalService);
 
         expect(methodSpy).toHaveBeenCalledTimes(1);
+        expect(printMethodSpy).not.toHaveBeenCalled();
+        expect(completeMethodSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should initialize with logged in user unsuccessful', () => {
+        const authService = TestBed.get(AuthService);
+        const errObj = { text: 'Error reason' };
+        authService.getIsUserLoggedIn$ = jasmine.createSpy().and.returnValue(throwError(errObj));
+        const methodSpy = spyOn(ModalService.prototype, 'showModal');
+        const printMethodSpy = spyOn(ModalService.prototype, 'printText');
+        const completeMethodSpy = spyOn(ModalService.prototype, 'onComplete');
+
+        const modalService = TestBed.get(ModalService);
+
+        expect(methodSpy).not.toHaveBeenCalled();
+        expect(printMethodSpy).toHaveBeenCalledWith('Error reason');
+        expect(completeMethodSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should return correct value from subject', inject([ModalService],
