@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { PostBody } from '../models/post-body';
 import { HttpRequest } from '@angular/common/http';
 import { StatusResponse } from '../models/response';
-import { finalize } from 'rxjs/operators';
 
 describe('AuthService', () => {
 
