@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { IStatusResponse } from '../models/response';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { IPostBody, PostBody } from '../models/post-body';
 
 @Injectable()
@@ -35,6 +35,21 @@ export class AuthService {
         ).pipe(map((response: IStatusResponse) => {
             return response;
         }));
+    }
+
+    getUserData() {
+        this.http.get<IStatusResponse>(
+            'https://demo1734473.mockable.io/user'
+        ).pipe(map((response: IStatusResponse) => {
+            return response;
+        })).subscribe(_ => {
+        }, err => {
+            this.printError(err);
+        });
+    }
+
+    printError(data: any) {
+        console.log(data);
     }
 }
 

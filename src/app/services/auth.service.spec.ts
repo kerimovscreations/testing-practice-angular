@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PostBody } from '../models/post-body';
 import { HttpRequest } from '@angular/common/http';
 import { StatusResponse } from '../models/response';
+import { finalize } from 'rxjs/operators';
 
 describe('AuthService', () => {
 
@@ -37,7 +38,7 @@ describe('AuthService', () => {
             expect(routerSpy).toHaveBeenCalledWith(['/login']);
         }));
 
-    it('should clear user data', inject([AuthService, HttpTestingController],
+    it('should clear user data successful', inject([AuthService, HttpTestingController],
         (authService: AuthService, backend: HttpTestingController) => {
 
             const mockResponse = new StatusResponse(200, 'Success');
@@ -52,5 +53,21 @@ describe('AuthService', () => {
                     && request.url === 'https://demo1734473.mockable.io/logout'
                     && JSON.stringify(request.body) === JSON.stringify(formData);
             }).flush(mockResponse);
+        }));
+
+    it('should get user data unsuccessfully', inject([AuthService, HttpTestingController],
+        (authService: AuthService, backend: HttpTestingController) => {
+
+            const errObj = new ErrorEvent('Network error');
+            const errMethodSpy = spyOn(authService, 'printError');
+
+            authService.getUserData();
+
+            backend.expectOne((request: HttpRequest<any>) => {
+                return request.method === 'GET'
+                    && request.url === 'https://demo1734473.mockable.io/user';
+            }).error(errObj);
+
+            expect(errMethodSpy).toHaveBeenCalledTimes(1);
         }));
 });
