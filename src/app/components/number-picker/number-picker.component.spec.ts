@@ -20,13 +20,22 @@ describe('DatePickerComponenr', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should assign valid css classes', () => {
+    it('should assign valid css class', () => {
         component.isValueValid = true;
 
         fixture.detectChanges();
 
         expect(component.parentDiv.nativeElement.classList.contains('valid')).toEqual(true);
         expect(component.parentDiv.nativeElement.classList.contains('invalid')).toEqual(false);
+    });
+
+    it('should assign invalid css class', () => {
+        component.isValueValid = false;
+
+        fixture.detectChanges();
+
+        expect(component.parentDiv.nativeElement.classList.contains('valid')).toEqual(false);
+        expect(component.parentDiv.nativeElement.classList.contains('invalid')).toEqual(true);
     });
 
     it('should set correct background color when valid', () => {
