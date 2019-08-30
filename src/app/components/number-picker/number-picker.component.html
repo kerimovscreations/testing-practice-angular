@@ -1,0 +1,12 @@
+<div #parentDiv id="input-wrapper" [ngClass]="{'invalid': !isValueValid, 'valid': isValueValid}"
+  [ngStyle]="{'margin-bottom': isValueValid ? '10px' : '0px' }">
+  <input #inputElem [value]="elementCount" (input)="onInputChange($event.target.value)" type="number">
+</div>
+
+<ng-container *ngIf="isValueValid">
+  <ng-container *ngFor="let item of items">
+    <div class="list-item">
+      <h4>{{item.title}}</h4>
+    </div>
+  </ng-container>
+</ng-container>

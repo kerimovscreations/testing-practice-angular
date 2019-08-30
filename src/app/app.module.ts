@@ -5,16 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { RouteListenerComponent } from './components/router-listener/router-listener.component';
+import { NumberPickerComponent } from './components/number-picker/number-picker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RouteListenerComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    NumberPickerComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
